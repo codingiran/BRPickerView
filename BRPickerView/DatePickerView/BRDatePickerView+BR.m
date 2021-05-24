@@ -372,14 +372,21 @@ BRSYNTH_DUMMY_CLASS(BRDatePickerView_BR)
 - (void)setupPickerView:(UIView *)pickerView toView:(UIView *)view {
     if (view) {
         // 立即刷新容器视图 view 的布局（防止 view 使用自动布局时，选择器视图无法正常显示）
-        [view setNeedsLayout];
-        [view layoutIfNeeded];
-        
-        self.frame = view.bounds;
+//        [view setNeedsLayout];
+//        [view layoutIfNeeded];
+//
+//        self.frame = view.bounds;
         CGFloat pickerHeaderViewHeight = self.pickerHeaderView ? self.pickerHeaderView.bounds.size.height : 0;
         CGFloat pickerFooterViewHeight = self.pickerFooterView ? self.pickerFooterView.bounds.size.height : 0;
-        pickerView.frame = CGRectMake(0, pickerHeaderViewHeight, view.bounds.size.width, view.bounds.size.height - pickerHeaderViewHeight - pickerFooterViewHeight);
+//        pickerView.frame = CGRectMake(0, pickerHeaderViewHeight, view.bounds.size.width, view.bounds.size.height - pickerHeaderViewHeight - pickerFooterViewHeight);
         [self addSubview:pickerView];
+        // 处理布局问题
+        pickerView.translatesAutoresizingMaskIntoConstraints = NO;
+        NSLayoutConstraint *top = [NSLayoutConstraint constraintWithItem:pickerView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeTop multiplier:1 constant:pickerHeaderViewHeight];
+        NSLayoutConstraint *leading = [NSLayoutConstraint constraintWithItem:pickerView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeLeading multiplier:1 constant:0];
+        NSLayoutConstraint *bottom = [NSLayoutConstraint constraintWithItem:pickerView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeBottom multiplier:1 constant:pickerFooterViewHeight];
+        NSLayoutConstraint *trailing = [NSLayoutConstraint constraintWithItem:pickerView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeTrailing multiplier:1 constant:0];
+        [self addConstraints:@[top, leading, bottom, trailing]];
     } else {
         [self.alertView addSubview:pickerView];
     }

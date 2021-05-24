@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
                     A custom picker view for iOS, Include "日期选择器，时间选择器，地址选择器，自定义字符串选择器，支持自定义样式，适配深色模式", Support the Objective - C language.
                 DESC
   # 框架的主页
-  s.homepage     = "https://github.com/91renb/BRPickerView"
+  s.homepage     = "https://github.com/codingiran/BRPickerView"
   # 证书类型
   s.license      = { :type => "MIT", :file => "LICENSE" }
 
