@@ -417,6 +417,17 @@
             }
         });
     }
+    
+    // 处理 _foregroundView 的颜色
+    if (@available(iOS 14.0, *)) {
+
+    } else {
+        NSString *keyName = [NSString stringWithFormat:@"_f%@round%@", @"oreg", @"View"];
+        UIView *_foregroundView = [pickerView valueForKey:keyName];
+        if (_foregroundView) {
+            _foregroundView.backgroundColor = pickerView.backgroundColor;
+        }
+    }
 }
 
 // 遍历子视图，重新设置 frame（清空在 iOS14 上 UIPickerView 出现的内边距）
